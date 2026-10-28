@@ -195,6 +195,7 @@
     {
       "id": "real_01_basketball_wuxia",
       "title": "Basketball, reimagined as wuxia",
+      "label": "Basketball",
       "instruction": "Transform the basketball game video into a high-budget cinematic Wuxia movie scene. The two players are now wearing elegant, flowing ancient Chinese Hanfu robes with wide sleeves. The basketball court is replaced by an ancient, weathered stone training platform located high in the misty mountains, surrounded by a dense bamboo forest and traditional wooden pagodas. Add dramatic golden hour sunlight filtering through the leaves, creating long shadows and atmospheric haze.",
       "duration": 5.641995,
       "provenance": {
@@ -210,6 +211,7 @@
     {
       "id": "real_04_piano_lounge",
       "title": "An everyday café becomes a piano lounge",
+      "label": "Piano",
       "instruction": "Transform the café into a luxurious piano lounge with crystal chandeliers, dark wood paneling, and warm cinematic lighting. Dress the pianist in a black tuxedo and the guests in elegant evening wear. Give the piano a polished black finish. Preserve faces, playing motions, keyboard alignment, and camera movement.",
       "duration": 5.317007,
       "provenance": {
@@ -221,6 +223,86 @@
       "lowPoster": "assets/demo-posters/real_04_piano_lounge-low.jpg",
       "ours": "assets/demos/real_04_piano_lounge-ours.mp4",
       "oursPoster": "assets/demo-posters/real_04_piano_lounge-ours.jpg"
+    },
+    {
+      "id": "real_02_guitar_palace",
+      "title": "A guitar performance in a palace salon",
+      "label": "Guitar",
+      "instruction": "Transform the venue into an elegant Chinese palace music salon with carved wooden screens, silk drapes, and warm lantern lighting. Dress both performers in embroidered silk hanfu. Preserve their faces, poses, guitar, and hand movements.",
+      "duration": 4.969002,
+      "provenance": {
+        "collection": "Real-world supplementary examples",
+        "denoising_steps": 20,
+        "seed": 2502
+      },
+      "low": "assets/demos/real_02_guitar_palace-low.mp4",
+      "lowPoster": "assets/demo-posters/real_02_guitar_palace-low.jpg",
+      "ours": "assets/demos/real_02_guitar_palace-ours.mp4",
+      "oursPoster": "assets/demo-posters/real_02_guitar_palace-ours.jpg"
+    },
+    {
+      "id": "real_05_pingpong_space",
+      "title": "Table tennis aboard a space station",
+      "label": "Table tennis",
+      "instruction": "Transform the room into a futuristic space-station sports arena with metallic walls, blue-white lighting, and Earth visible through large windows. Dress the players in sleek sci-fi athletic suits and give the table glowing blue edges. Preserve faces, playing motions, ball trajectory, table geometry, and camera movement.",
+      "duration": 4.480998,
+      "provenance": {
+        "collection": "Real-world supplementary examples",
+        "denoising_steps": 20,
+        "seed": 2505
+      },
+      "low": "assets/demos/real_05_pingpong_space-low.mp4",
+      "lowPoster": "assets/demo-posters/real_05_pingpong_space-low.jpg",
+      "ours": "assets/demos/real_05_pingpong_space-ours.mp4",
+      "oursPoster": "assets/demo-posters/real_05_pingpong_space-ours.jpg"
+    },
+    {
+      "id": "real_03_mahjong_casino",
+      "title": "Mahjong in a cinematic lounge",
+      "label": "Mahjong",
+      "instruction": "Turn the room into a luxury casino lounge with warm cinematic lighting. Dress all four players in tailored suits and upgrade the mahjong table to polished dark wood. Keep faces, actions, and camera motion unchanged.",
+      "duration": 5.200998,
+      "provenance": {
+        "collection": "Real-world supplementary examples",
+        "denoising_steps": 20,
+        "seed": 2503
+      },
+      "low": "assets/demos/real_03_mahjong_casino-low.mp4",
+      "lowPoster": "assets/demo-posters/real_03_mahjong_casino-low.jpg",
+      "ours": "assets/demos/real_03_mahjong_casino-ours.mp4",
+      "oursPoster": "assets/demo-posters/real_03_mahjong_casino-ours.jpg"
+    },
+    {
+      "id": "real_06_sakura_fantasy",
+      "title": "A walk through a fantasy cherry garden",
+      "label": "Cherry garden",
+      "instruction": "Transform the park into a cinematic Chinese fantasy garden with distant floating mountains, ornate pavilions, and drifting cherry petals. Dress the person in embroidered silk hanfu. Preserve the face, phone, hand movements, and camera motion.",
+      "duration": 3.808005,
+      "provenance": {
+        "collection": "Real-world supplementary examples",
+        "denoising_steps": 20,
+        "seed": 2506
+      },
+      "low": "assets/demos/real_06_sakura_fantasy-low.mp4",
+      "lowPoster": "assets/demo-posters/real_06_sakura_fantasy-low.jpg",
+      "ours": "assets/demos/real_06_sakura_fantasy-ours.mp4",
+      "oursPoster": "assets/demo-posters/real_06_sakura_fantasy-ours.jpg"
+    },
+    {
+      "id": "real_07_train_scifi",
+      "title": "A cinematic sci-fi train crossing",
+      "label": "Train",
+      "instruction": "Transform the train into a futuristic sci-fi train with titanium panels, glowing blue light strips, and sleek rooftop power modules. Upgrade the surroundings to a futuristic urban transit hub with cinematic lighting and realistic reflections. Preserve the train’s motion, window layout, and camera movement.",
+      "duration": 3.551995,
+      "provenance": {
+        "collection": "Real-world supplementary examples",
+        "denoising_steps": 20,
+        "seed": 2507
+      },
+      "low": "assets/demos/real_07_train_scifi-low.mp4",
+      "lowPoster": "assets/demo-posters/real_07_train_scifi-low.jpg",
+      "ours": "assets/demos/real_07_train_scifi-ours.mp4",
+      "oursPoster": "assets/demo-posters/real_07_train_scifi-ours.jpg"
     }
   ]
 }

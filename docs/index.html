@@ -3,40 +3,51 @@
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FilmTogether — Cinematic Video Generation from Low-Cost Inputs</title>
-  <meta name="description" content="FilmTogether and CineCraft-120K: cinematic video generation from low-cost inputs. Watch 10 selected benchmark results and two real-world video demos, with synchronized input/output comparisons.">
+  <meta name="description" content="FilmTogether and CineCraft-120K: cinematic video generation from low-cost inputs. Watch seven real-world demos first, followed by 10 selected benchmark transformations with synchronized input/output comparisons.">
   <meta property="og:title" content="FilmTogether: Cinematic Video Generation from Low-Cost Inputs">
   <meta property="og:description" content="Bring cinematic production detail to everyday footage. Explore real low/high pairs and full-duration FilmTogether results.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://shiying-zhang.github.io/FilmTogether/assets/demo-posters/heldout1000_0133-ours.jpg">
+  <meta property="og:image" content="https://shiying-zhang.github.io/FilmTogether/assets/demo-posters/real_01_basketball_wuxia-ours.jpg">
   <meta name="theme-color" content="#fafbf9">
   <link rel="canonical" href="https://shiying-zhang.github.io/FilmTogether/">
-  <link rel="stylesheet" href="style.css">
-  <script src="assets/showcase.js?v=20261028-2" defer></script>
-  <script src="app.js?v=20261028-2" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261028-3">
+  <script src="assets/showcase.js?v=20261028-3" defer></script>
+  <script src="app.js?v=20261028-3" defer></script>
 </head>
 <body>
-  <a class="skip" href="#results">Skip to video results</a>
+  <a class="skip" href="#demos">Skip to video demos</a>
   <header class="nav-wrap"><nav class="nav container" aria-label="Main navigation">
     <a href="#top" class="nav-brand">FilmTogether<span class="brand-period">.</span></a>
-    <div class="nav-links"><a href="#results">Results</a><a href="#demos">Demos</a><a href="#dataset">Dataset</a><a href="#method">Method</a><a href="#resources">Resources</a></div>
+    <div class="nav-links"><a href="#demos">Demos</a><a href="#results">Results</a><a href="#dataset">Dataset</a><a href="#method">Method</a><a href="#resources">Resources</a></div>
     <a class="nav-code" href="https://github.com/Shiying-Zhang/FilmTogether" target="_blank" rel="noopener">GitHub</a>
   </nav></header>
   <main id="top">
     <section class="hero container">
       <p class="eyebrow">National University of Singapore · Research project · 2026</p>
       <h1>Film<span>Together</span></h1>
-      <p class="paper-title">Cinematic Video Generation<br class="desktop-break"> from Low-Cost Inputs</p>
+      <p class="paper-title">Cinematic Video Generation from Low-Cost Inputs</p>
       <div class="authors" aria-label="Paper authors">
         <a href="https://openreview.net/profile?id=~Shiying_Zhang5" target="_blank" rel="noopener">Shiying Zhang</a><a href="https://openreview.net/profile?id=~Xiaobin_Hu1" target="_blank" rel="noopener">Xiaobin Hu</a><a href="https://openreview.net/profile?id=~Qianchi_Zhang2" target="_blank" rel="noopener">Qianchi Zhang</a><a href="https://openreview.net/profile?id=~Jiaqi_Zhao3" target="_blank" rel="noopener">Jiaqi Zhao</a><a href="https://openreview.net/profile?id=~Xiaoda_Yang1" target="_blank" rel="noopener">Xiaoda Yang</a><a href="https://openreview.net/profile?id=~Bo_Yin2" target="_blank" rel="noopener">Bo Yin</a><a href="https://openreview.net/profile?id=~Shuicheng_YAN3" target="_blank" rel="noopener">Shuicheng Yan</a>
       </div>
       <p class="affiliation">National University of Singapore</p>
       <div class="resource-buttons"><a class="button button-dark" href="assets/paper/FilmTogether.pdf" target="_blank" rel="noopener">Read the paper</a><a class="button" href="https://github.com/Shiying-Zhang/FilmTogether" target="_blank" rel="noopener">Code on GitHub</a><a class="button button-green" href="https://huggingface.co/datasets/Anna-SY/CineCraft-120K" target="_blank" rel="noopener">CineCraft-120K dataset</a></div>
       <p class="hero-description">The same scene. A richer cinematic world.<br>Upgrade costumes, lighting, materials, and atmosphere while preserving the action.</p>
-      <a class="demo-shortcut" href="#demos">Watch the basketball &amp; piano demos ↓</a>
     </section>
 
+    <section class="real-band real-first" id="demos" aria-labelledby="demos-title"><div class="container content-section">
+      <div class="section-heading"><p class="eyebrow">Real-world demos</p><h2 id="demos-title">Everyday footage. <em>Cinematic worlds.</em></h2><p>Seven everyday moments, transformed by FilmTogether. Original inputs on the left; actual model outputs on the right.</p></div>
+      <div class="real-feature">
+        <div class="featured-topline"><h3 id="real-title">Basketball, reimagined as wuxia</h3><div class="pager"><button id="previous-demo" aria-label="Previous real-world demo">Previous</button><span id="demo-position">1 / 7</span><button id="next-demo" aria-label="Next real-world demo">Next</button></div></div>
+        <div id="real-pair" class="real-pair"><div class="video-panel"><div class="panel-label"><strong>Low-cost input</strong></div><video muted playsinline controls preload="metadata" src="assets/demos/real_01_basketball_wuxia-low.mp4" poster="assets/demo-posters/real_01_basketball_wuxia-low.jpg"></video></div><div class="video-panel"><div class="panel-label"><strong>FilmTogether output</strong></div><video muted playsinline controls preload="metadata" src="assets/demos/real_01_basketball_wuxia-ours.mp4" poster="assets/demo-posters/real_01_basketball_wuxia-ours.jpg"></video></div></div>
+        <div class="featured-controls"><button id="demo-play" class="play-button">Play comparison</button><label class="scrub-label" for="demo-time">Demo video position</label><input id="demo-time" type="range" min="0" max="1000" value="0" aria-label="Seek both demo videos"><span id="demo-clock">0:00 / 0:05</span><button id="demo-reset" class="text-button">Restart</button></div>
+        <div class="demo-meta"><details class="featured-prompt"><summary>Read the editing prompt</summary><p id="demo-instruction"></p></details><a id="demo-output" href="assets/demos/real_01_basketball_wuxia-ours.mp4" target="_blank" rel="noopener">Open output video</a></div>
+        <div class="demo-selector" id="demo-selector" role="group" aria-label="Choose a real-world demo"></div>
+      </div>
+      <p class="preview-note">Synchronized, muted web previews with full clip durations. Real-world demonstrations are separate from the benchmark below.</p>
+    </div></section>
+
     <section class="container results-section" id="results" aria-labelledby="results-title">
-      <div class="section-heading"><p class="eyebrow">Watch the transformation</p><h2 id="results-title">Low-cost footage.<br><em>Cinematic possibilities.</em></h2><p>A curated showcase, not the full evaluation set. Compare the original footage with actual FilmTogether outputs.</p></div>
+      <div class="section-heading"><p class="eyebrow">CineCraft-Bench · Selected results</p><h2 id="results-title">Low-cost footage.<br><em>Cinematic possibilities.</em></h2><p>Ten curated benchmark examples. Compare FilmTogether outputs or switch to the paired high-cost dataset references.</p></div>
       <div class="mode-tabs" role="tablist" aria-label="Comparison type"><button role="tab" id="model-tab" aria-controls="comparison-content" aria-selected="true" data-mode="ours">FilmTogether results</button><button role="tab" id="dataset-tab" aria-controls="comparison-content" aria-selected="false" data-mode="target">Low / high dataset pairs</button></div>
       <p class="mode-description" id="mode-description">Full-duration model outputs · exp5 step 6000 · 20 denoising steps</p>
       <div id="comparison-content" role="tabpanel" aria-labelledby="model-tab">
@@ -53,12 +64,10 @@
       <p class="preview-note">Muted, compressed web previews. Input and output clips retain their original duration. Dataset targets are reference high-cost videos, not model predictions.</p>
     </section>
 
-    <section class="real-band" id="demos"><div class="container content-section"><div class="section-heading"><p class="eyebrow">Beyond the benchmark</p><h2>Everyday moments.<br><em>A cinematic reimagining.</em></h2><p>Two real-world demonstrations from the paper: a basketball game and a café piano performance. These are model outputs, not dataset targets.</p></div><div id="real-gallery" class="real-gallery"></div><p class="preview-note">Both pairs play in sync. Open the editing prompt to see the requested transformation.</p></div></section>
-
     <section class="about-band" id="about"><div class="container about-layout"><div><p class="eyebrow">The research</p><h2>A production upgrade,<br>not a new performance.</h2></div><div><p>Casual captures and professional productions can share the same scene, yet differ in lighting, clothing, materials, and visual atmosphere. FilmTogether studies how to improve these production elements without changing the underlying identity, composition, and motion.</p><p>The project brings together <strong>CineCraft-120K</strong>, a paired cinematic editing dataset, and a <strong>dual-memory adapter</strong> that enriches textual instructions and refines source-video hints.</p></div></div></section>
 
     <section class="container content-section" id="dataset"><div class="section-heading"><p class="eyebrow">CineCraft-120K</p><h2>Paired scenes.<br><em>Element-wise instructions.</em></h2><p>A cinematic source bank, structure-preserving counterpart synthesis, and prompts grounded in the actual low-to-high transformation.</p></div>
-      <div class="stats"><div><strong>120K+</strong><span>paired clips described in the paper</span></div><div><strong>5</strong><span>broad cinematic domains</span></div><div><strong>23</strong><span>fine-grained categories</span></div><div><strong>12</strong><span>selected video examples on this page</span></div></div>
+      <div class="stats"><div><strong>120K+</strong><span>paired clips described in the paper</span></div><div><strong>5</strong><span>broad cinematic domains</span></div><div><strong>23</strong><span>fine-grained categories</span></div><div><strong>17</strong><span>selected video examples on this page</span></div></div>
       <figure class="research-figure"><a href="assets/figures/data-pipeline.png" target="_blank" rel="noopener"><img src="assets/figures/data-pipeline.png" loading="lazy" alt="CineCraft-120K data pipeline: source footage, quality curation, low-cost counterpart synthesis, and pair-aware instructions" width="1500" height="760"></a><figcaption>The CineCraft-120K construction pipeline. Open the figure to inspect the details.</figcaption></figure>
       <div class="release-note"><strong>Dataset release in progress.</strong><p>The public dataset repository is the release entry point. The videos above are a curated qualitative showcase, not an exhaustive evaluation. The full paired-video release is being assembled in batches.</p><a href="https://huggingface.co/datasets/Anna-SY/CineCraft-120K" target="_blank" rel="noopener">Visit the dataset repository</a></div>
     </section>

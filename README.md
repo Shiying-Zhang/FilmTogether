@@ -12,10 +12,14 @@ Project repository for FilmTogether and the CineCraft-120K paired video dataset.
 
 ## Video showcase
 
-The project page contains 10 curated CineCraft-Bench examples and two real-world
-demonstrations (basketball and piano). Input/output pairs play synchronously;
+The project page leads with seven real-world demonstrations: basketball, piano,
+guitar, table tennis, mahjong, a cherry garden, and a train crossing. A thumbnail
+selector switches the large synchronized input/output pair, prompt, and seek bar.
+The 10 curated CineCraft-Bench examples follow the real-world showcase.
+
+Input/output pairs play synchronously;
 high-cost dataset references are separately labelled, not presented as model
-outputs. All 34 clips are compressed, muted web previews with full durations.
+outputs. All 44 clips are compressed, muted web previews with full durations.
 
 This is a qualitative showcase, not a replacement for the full evaluation set.
 Benchmark examples use the existing exp5 step6000 outputs with 20 denoising steps.

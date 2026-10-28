@@ -1,7 +1,8 @@
 'use strict';
 const $ = (selector, root = document) => root.querySelector(selector);
-const state = {samples: [], mode: 'ours', category: 'All styles', query: '', visible: 10, featured: 0};
+const state = {samples: [], realWorld: [], realFeatured: 0, mode: 'ours', category: 'All styles', query: '', visible: 10, featured: 0};
 let featureController;
+let demoController;
 const pairControllers = new Set();
 const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const clock = value => { const seconds = Math.max(0, Math.floor(value || 0)); return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`; };
@@ -62,6 +63,33 @@ function renderFeatured() {
   featureController = new SyncedPair($('#featured-pair'), button, progress, $('#feature-clock'));
 }
 
+function renderRealDemo() {
+  if (demoController) demoController.destroy();
+  const sample = state.realWorld[state.realFeatured];
+  $('#real-pair').innerHTML = videoPanel(sample,'low',true) + videoPanel(sample,'ours',true);
+  $('#real-pair').dataset.duration = sample.duration;
+  $('#real-title').textContent = sample.title;
+  $('#demo-position').textContent = `${state.realFeatured+1} / ${state.realWorld.length}`;
+  $('#demo-instruction').textContent = sample.instruction;
+  $('#demo-output').href = sample.ours;
+  $('#demo-clock').textContent = `0:00 / ${clock(sample.duration)}`;
+  $('#demo-time').value = 0;
+  const oldButton = $('#demo-play');
+  const button = oldButton.cloneNode(true); button.textContent = 'Play comparison'; button.disabled = false; oldButton.replaceWith(button);
+  const oldProgress = $('#demo-time'), progress = oldProgress.cloneNode(true); oldProgress.replaceWith(progress);
+  demoController = new SyncedPair($('#real-pair'),button,progress,$('#demo-clock'));
+  $('#demo-selector').querySelectorAll('button').forEach((button,index) => button.setAttribute('aria-pressed',String(index===state.realFeatured)));
+}
+
+function initializeRealDemos() {
+  $('#demo-selector').innerHTML = state.realWorld.map((sample,index) => `<button class="demo-choice" data-demo="${index}" aria-pressed="${index===state.realFeatured}" aria-label="Show ${escapeHTML(sample.label)} demo"><img src="${sample.oursPoster}" alt="" width="180" height="104"><span>${escapeHTML(sample.label)}</span></button>`).join('');
+  $('#demo-selector').querySelectorAll('button').forEach(button => button.addEventListener('click',()=>{state.realFeatured=Number(button.dataset.demo); renderRealDemo();}));
+  $('#previous-demo').addEventListener('click',()=>{state.realFeatured=(state.realFeatured-1+state.realWorld.length)%state.realWorld.length;renderRealDemo();});
+  $('#next-demo').addEventListener('click',()=>{state.realFeatured=(state.realFeatured+1)%state.realWorld.length;renderRealDemo();});
+  $('#demo-reset').addEventListener('click',()=>{demoController.pause();demoController.seek(0);});
+  renderRealDemo();
+}
+
 function matchingSamples() {const query = state.query.toLowerCase(); return state.samples.filter(sample => (state.category === 'All styles' || sample.category === state.category) && (!query || `${sample.instruction} ${sample.id} ${sample.category}`.toLowerCase().includes(query)));}
 
 function renderGallery() {
@@ -85,9 +113,8 @@ async function initialize() {
   try {
     const showcase = window.FILMTOGETHER_SHOWCASE;
     if (!showcase || !Array.isArray(showcase.samples) || !showcase.samples.length) throw Error('Showcase catalog unavailable');
-    state.samples = showcase.samples; renderFeatured(); renderFilters(); renderGallery();
-    $('#real-gallery').innerHTML = showcase.realWorld.map(sample => `<article class="real-example"><div class="real-topline"><h3>${escapeHTML(sample.title)}</h3><span>Real-world demo · ${sample.duration.toFixed(1)}s</span></div><div class="real-pair">${videoPanel(sample,'low',true)}${videoPanel(sample,'ours',true)}</div><div class="card-actions"><button class="card-play" aria-label="Play ${sample.id}">Play comparison</button><a href="${sample.ours}" target="_blank" rel="noopener">Open output video</a></div><details><summary>Editing prompt</summary><p>${escapeHTML(sample.instruction)}</p></details></article>`).join('');
-    document.querySelectorAll('.real-example').forEach(card => new SyncedPair($('.real-pair',card),$('.card-play',card)));
+    state.samples = showcase.samples; state.realWorld = showcase.realWorld;
+    initializeRealDemos(); renderFeatured(); renderFilters(); renderGallery();
   }
   catch (error) {console.error('Showcase initialization failed:', error); $('#feature-category').textContent = 'Preview controls unavailable — the videos below can still be played directly.'; $('#load-more').hidden = true; return;}
   $('#previous-case').addEventListener('click', () => {state.featured = (state.featured - 1 + state.samples.length) % state.samples.length; renderFeatured();});
@@ -104,6 +131,7 @@ async function initialize() {
   $('#load-more').addEventListener('click', () => {state.visible += 6; renderGallery();});
   const observer = new IntersectionObserver(entries => {entries.forEach(entry => {if (!entry.isIntersecting) for (const pair of pairControllers) if (pair.root === entry.target) pair.pause();});},{threshold:.05});
   observer.observe($('#featured-pair'));
+  observer.observe($('#real-pair'));
   document.addEventListener('visibilitychange', () => {if (document.hidden) pairControllers.forEach(pair => pair.pause());});
 }
 
