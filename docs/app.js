@@ -30,11 +30,11 @@ class SyncedPair {
     for (const video of this.videos) { if (!video.src) {video.src = video.dataset.src; video.load();} }
     try {
       await Promise.all(this.videos.map(video => video.play()));
-      this.playing = true; this.button.textContent = 'Pause comparison'; this.tick();
+      this.playing = true; this.button.dataset.playing = 'true'; this.button.textContent = 'Pause comparison'; this.tick();
     } catch (error) {this.pause(); this.button.textContent = 'Play comparison';}
     finally {this.loading = false;}
   }
-  pause() { this.playing = false; this.videos.forEach(video => video.pause()); cancelAnimationFrame(this.frame); if (!this.button.disabled) this.button.textContent = this.originalText; }
+  pause() { this.playing = false; this.button.dataset.playing = 'false'; this.videos.forEach(video => video.pause()); cancelAnimationFrame(this.frame); if (!this.button.disabled) this.button.textContent = this.originalText; }
   seek(fraction) { this.videos.forEach(video => {if (Number.isFinite(video.duration)) video.currentTime = Math.min(fraction * video.duration, Math.max(0, video.duration - 0.02));}); this.display(); }
   display() {const first = this.videos[0]; if (this.progress && first.duration) this.progress.value = Math.round(first.currentTime / first.duration * 1000); if (this.clockEl) this.clockEl.textContent = `${clock(first.currentTime)} / ${clock(first.duration || this.root.dataset.duration)}`;}
   tick() {if (!this.playing) return; const [a,b] = this.videos; const fraction = a.duration ? a.currentTime / a.duration : 0; if (b.duration && Math.abs(b.currentTime - fraction * b.duration) > .14) b.currentTime = fraction * b.duration; this.display(); this.frame = requestAnimationFrame(() => this.tick());}
@@ -122,11 +122,21 @@ async function initialize() {
   $('#feature-reset').addEventListener('click', () => {featureController.pause(); featureController.seek(0);});
   document.querySelectorAll('[data-mode]').forEach(button => button.addEventListener('click', () => {
     state.mode = button.dataset.mode;
-    document.querySelectorAll('[data-mode]').forEach(tab => tab.setAttribute('aria-selected',String(tab === button)));
+    document.querySelectorAll('[data-mode]').forEach(tab => {tab.setAttribute('aria-selected',String(tab === button)); tab.tabIndex = tab === button ? 0 : -1;});
     $('#comparison-content').setAttribute('aria-labelledby',button.id);
     $('#mode-description').textContent = state.mode === 'ours' ? 'Full-duration model outputs · exp5 step 6000 · 20 denoising steps' : 'Paired high-cost dataset references · not model predictions';
     renderFeatured(); renderGallery();
   }));
+  const modeTabs = [...document.querySelectorAll('[data-mode]')];
+  modeTabs.forEach((tab, index) => {
+    tab.tabIndex = index === 0 ? 0 : -1;
+    tab.addEventListener('keydown', event => {
+      if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+      event.preventDefault();
+      const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? modeTabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + modeTabs.length) % modeTabs.length;
+      modeTabs[nextIndex].focus(); modeTabs[nextIndex].click();
+    });
+  });
   $('#prompt-search').addEventListener('input', event => {state.query = event.target.value; state.visible = 10; renderGallery();});
   $('#load-more').addEventListener('click', () => {state.visible += 6; renderGallery();});
   const observer = new IntersectionObserver(entries => {entries.forEach(entry => {if (!entry.isIntersecting) for (const pair of pairControllers) if (pair.root === entry.target) pair.pause();});},{threshold:.05});
@@ -137,3 +147,20 @@ async function initialize() {
 
 $('#copy-citation').addEventListener('click', async event => {try {await navigator.clipboard.writeText($('#citation').textContent); event.target.textContent = 'Copied'; setTimeout(() => {event.target.textContent = 'Copy BibTeX';},1800);} catch {event.target.textContent = 'Select and copy below';}});
 initialize();
+
+// Keep the report-style navigation aligned with the section being viewed.
+const navigationLinks = [...document.querySelectorAll('.nav-links a')];
+const navigationObserver = new IntersectionObserver(entries => {
+  const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
+  if (!visible.length) return;
+  const current = `#${visible[0].target.id || 'demos'}`;
+  navigationLinks.forEach(link => {
+    if (link.getAttribute('href') === current) link.setAttribute('aria-current','location');
+    else link.removeAttribute('aria-current');
+  });
+}, {rootMargin: '-15% 0px -60% 0px'});
+navigationLinks.forEach(link => {
+  const section = document.querySelector(link.getAttribute('href'));
+  if (section) navigationObserver.observe(section);
+});
+navigationObserver.observe(document.querySelector('.hero'));
